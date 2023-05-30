@@ -32,7 +32,11 @@
 #include <sys/cdefs.h>
 
 #include <assert.h>
+#if defined(_MSC_VER) || defined(__MINGW32__) || defined(__MSYS__)
+#include <bsd/err.h>
+#else
 #include <err.h>
+#endif
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

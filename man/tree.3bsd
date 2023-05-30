@@ -490,7 +490,11 @@ in order.
 Lastly, the internal structure of the tree is printed.
 .Bd -literal -offset 3n
 #include <sys/tree.h>
+#if defined(_MSC_VER) || defined(__MINGW32__) || defined(__MSYS__)
+#include <bsd/err.h>
+#else
 #include <err.h>
+#endif
 #include <stdio.h>
 #include <stdlib.h>
 

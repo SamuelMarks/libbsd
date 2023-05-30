@@ -25,7 +25,11 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#if defined(_MSC_VER) || defined(__MINGW32__) || defined(__MSYS__)
+#include <bsd/err.h>
+#else
 #include <err.h>
+#endif
 #ifdef LIBBSD_NEED_ERR_H_FUNCS
 #include <errno.h>
 #endif

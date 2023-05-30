@@ -28,7 +28,11 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
+#if defined(_MSC_VER) || defined(__MINGW32__) || defined(__MSYS__)
+#include <bsd/err.h>
+#else
 #include <err.h>
+#endif
 #include <unistd.h>
 #include <string.h>
 #include "local-link.h"

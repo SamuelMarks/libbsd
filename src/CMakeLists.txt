@@ -1,0 +1,162 @@
+set(LIBRARY_NAME "${PROJECT_NAME}")
+
+set(Header_Files "arc4random.h"
+        "chacha_private.h"
+        "local-elf.h"
+        "local-link.h")
+source_group("Header Files" FILES "${Header_Files}")
+
+set(Source_Files "arc4random.c"
+        "arc4random_uniform.c"
+        "bsd_getopt.c"
+        "closefrom.c"
+        "dehumanize_number.c"
+        "err.c"
+        "expand_number.c"
+        "explicit_bzero.c"
+        "fgetln.c"
+        "fgetwln.c"
+        "flopen.c"
+        "fmtcheck.c"
+        "fparseln.c"
+        "fpurge.c"
+        "freezero.c"
+        "funopen.c"
+        "getbsize.c"
+        "getentropy.c"
+        "getentropy_win.c"
+        "getpeereid.c"
+        "heapsort.c"
+        "humanize_number.c"
+        "inet_net_pton.c"
+        "md5.c"
+        "merge.c"
+        "nlist.c"
+        "pidfile.c"
+        "progname.c"
+        "pwcache.c"
+        "radixsort.c"
+        "readpassphrase.c"
+        "reallocarray.c"
+        "reallocf.c"
+        "recallocarray.c"
+        "setmode.c"
+        "setproctitle.c"
+        "setproctitle_ctor.c"
+        "stringlist.c"
+        "strlcat.c"
+        "strlcpy.c"
+        "strmode.c"
+        "strnstr.c"
+        "strtoi.c"
+        "strtonum.c"
+        "strtou.c"
+        "timeconv.c"
+        "unvis.c"
+        "vis.c"
+        "wcslcat.c"
+        "wcslcpy.c")
+source_group("Source Files" FILES "${Source_Files}")
+
+if (MSVC OR CYGWIN OR CMAKE_SYSTEM_NAME STREQUAL "Windows"
+        OR CMAKE_SYSTEM_NAME MATCHES "MINGW.*")
+    list(APPEND Header_Files "arc4random_win.h")
+    list(APPEND Source_Files "getentropy_win.c")
+elseif (LINUX)
+    list(APPEND Header_Files "arc4random_linux.h")
+    list(APPEND Source_Files "getentropy_linux.c")
+elseif (APPLE)
+    list(APPEND Source_Files "getentropy_osx.c")
+else ()
+    list(APPEND Header_Files "arc4random_unix.h")
+    #
+#        "getentropy_aix.c"
+#        "getentropy_bsd.c"
+#        "getentropy_hpux.c"
+#        "getentropy_hurd.c"
+#        "getentropy_solaris.c"
+endif ()
+
+add_library("${LIBRARY_NAME}" "${Header_Files}" "${Source_Files}")
+
+if (MINGW)
+    if (DEFINED ENV{SYSTEM_BIN_DIR})
+        set(SYSTEM_BIN_DIR "$ENV{SYSTEM_BIN_DIR}")
+    else ()
+        get_filename_component(SYSTEM_BIN_DIR "${CMAKE_C_COMPILER}" DIRECTORY)
+        if (SYSTEM_BIN_DIR MATCHES ".*JetBrains.*")
+            if (EXISTS "C:/usr/msys64/mingw64/bin")
+                set(SYSTEM_BIN_DIR "C:/usr/msys64/mingw64/bin")
+            elseif (EXISTS "C:/msys64/mingw64/bin")
+                set(SYSTEM_BIN_DIR "C:/usr/msys64/mingw64/bin")
+            else ()
+                message(FATAL_ERROR "Unable to find real dir of MinGW")
+            endif ()
+        endif ()
+    endif ()
+    get_filename_component(SYSTEM_ROOT_DIR "${SYSTEM_BIN_DIR}" DIRECTORY)
+    list(APPEND CMAKE_PREFIX_PATH "${SYSTEM_ROOT_DIR}")
+endif ()
+find_package(PCRE2 REQUIRED)
+
+include(GNUInstallDirs)
+target_include_directories(
+        "${LIBRARY_NAME}"
+        PUBLIC
+        "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>"
+        "$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR/include}>"
+        "$<BUILD_INTERFACE:${CMAKE_BINARY_DIR}>"
+        "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>"
+        "${PCRE2_INCLUDE_DIRS}"
+)
+
+set(installable_libs
+        "${PROJECT_NAME}_headers"
+        "${PROJECT_NAME}_netinet"
+        "${PROJECT_NAME}_sys")
+
+target_link_libraries("${LIBRARY_NAME}" "${PCRE2_LIBRARIES}" "${installable_libs}")
+
+list(APPEND installable_libs "${LIBRARY_NAME}")
+
+if (CMAKE_SYSTEM_NAME STREQUAL "Windows"
+            OR CMAKE_SYSTEM_NAME MATCHES "MINGW.*")
+else ()
+    target_link_libraries("${LIBRARY_NAME}" m)
+endif ()
+set_target_properties(
+        "${LIBRARY_NAME}"
+        PROPERTIES
+        LINKER_LANGUAGE
+        C
+)
+
+include(GenerateExportHeader)
+set(_export_file "${CMAKE_BINARY_DIR}/${LIBRARY_NAME}_export.h")
+generate_export_header("${LIBRARY_NAME}" EXPORT_FILE_NAME "${_export_file}")
+
+#################
+# Install rules #
+#################
+
+include(GNUInstallDirs)
+
+# setup the version numbering
+set_property(TARGET "${LIBRARY_NAME}" PROPERTY VERSION "${${PROJECT_NAME}_VERSION}")
+set_property(TARGET "${LIBRARY_NAME}" PROPERTY SOVERSION "${${PROJECT_NAME}_VERSION_MAJOR}")
+
+if (TARGET "${DEPENDANT_LIBRARY}")
+    list(APPEND installable_libs "${DEPENDANT_LIBRARY}")
+endif ()
+if (CMAKE_VERSION VERSION_GREATER_EQUAL "3.19")
+    list(APPEND installable_libs "${PROJECT_NAME}_compiler_flags")
+endif ()
+install(TARGETS ${installable_libs}
+        EXPORT "${LIBRARY_NAME}Targets"
+        ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+        LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+        RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}")
+install(EXPORT "${LIBRARY_NAME}Targets" DESTINATION "${CMAKE_INSTALL_DATADIR}/${LIBRARY_NAME}")
+
+install(FILES ${Header_Files} "${_export_file}"
+        DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}")

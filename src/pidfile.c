@@ -29,7 +29,11 @@
 #include <sys/file.h>
 #include <sys/stat.h>
 
+#if defined(_MSC_VER) || defined(__MINGW32__) || defined(__MSYS__)
+#include <bsd/err.h>
+#else
 #include <err.h>
+#endif
 #include <errno.h>
 #include <fcntl.h>
 #include <libutil.h>

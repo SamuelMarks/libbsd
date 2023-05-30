@@ -31,10 +31,14 @@
  * $DragonFly: src/lib/libc/gen/getbsize.c,v 1.4 2005/11/13 00:07:42 swildner Exp $
  */
 
-#include <err.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#if defined(_MSC_VER) || defined(__MINGW32__) || defined(__MSYS__)
+#include <bsd/err.h>
+#else
+#include <err.h>
+#endif
 
 char *
 getbsize(int *headerlenp, long *blocksizep)

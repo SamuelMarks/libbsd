@@ -30,7 +30,6 @@
 #include <sys/cdefs.h>
 
 #include <sys/param.h>
-#include <sys/mman.h>
 #include <sys/stat.h>
 
 #include <errno.h>
@@ -39,9 +38,14 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <nlist.h>
 
 #include "local-elf.h"
+
+#if defined(_MSC_VER) || defined(__MINGW32__) || defined(__MSYS__)
+#else
+#include <sys/mman.h>
+#include <nlist.h>
+#endif
 
 /* Note: This function is used by libkvm0, so we need to export it.
  * It is not declared in the include files though. */
