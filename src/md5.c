@@ -24,7 +24,14 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#if defined(_MSC_VER) || defined(__MINGW32__) || defined(__MSYS__)
+#include <bsd/md5.h>
+#include <stdio.h>
+
+#else
 #include <md5.h>
+#endif
+
 #include "local-link.h"
 
 #pragma GCC diagnostic ignored "-Wmissing-prototypes"

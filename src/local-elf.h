@@ -27,7 +27,11 @@
 #ifndef LIBBSD_LOCAL_ELF_H
 #define LIBBSD_LOCAL_ELF_H
 
+#if defined(_MSC_VER) || defined(__MINGW32__) || defined(__MSYS__)
+#include <bsd/win_shim/elf.h>
+#else
 #include <elf.h>
+#endif
 
 #define IS_ELF(ehdr) \
 	((ehdr).e_ident[EI_MAG0] == ELFMAG0 && \

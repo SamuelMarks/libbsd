@@ -42,6 +42,22 @@
 #include "local-elf.h"
 
 #if defined(_MSC_VER) || defined(__MINGW32__) || defined(__MSYS__)
+#include <bsd/nlist.h>
+#define e_shnum shnum
+#define st_name name
+#define sh_link link
+#define sh_size size
+#define e_shoff shoff
+#define sh_type type
+#define st_info info
+#define e_shentsize shentsize
+#define sh_flags flags
+#define st_shndx shndx
+#define st_value value
+#define e_version version
+#define e_machine machine
+#define e_ident ident
+#define sh_offset off
 #else
 #include <sys/mman.h>
 #include <nlist.h>

@@ -32,7 +32,12 @@
 
 #include <sys/cdefs.h>
 #include <sys/types.h>
+
+#if defined(_MSC_VER) || defined(__MINGW32__) || defined(__MSYS__)
+#include <bsd/timeconv.h>
+#else
 #include <timeconv.h>
+#endif
 
 /*
  * Convert a 32 bit representation of time_t into time_t.  XXX needs to

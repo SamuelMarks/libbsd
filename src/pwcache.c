@@ -36,8 +36,14 @@
 #include <sys/types.h>
 
 #include <assert.h>
+#if defined(_MSC_VER) || defined(__MINGW32__) || defined(__MSYS__)
+#include <bsd/grp.h>
+#include <bsd/pwd.h>
+#include <inaddr.h>
+#else
 #include <grp.h>
 #include <pwd.h>
+#endif
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

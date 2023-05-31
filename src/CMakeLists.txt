@@ -14,14 +14,14 @@ set(Source_Files "arc4random.c"
         "err.c"
         "expand_number.c"
         "explicit_bzero.c"
-        "fgetln.c"
+        # "fgetln.c" # TODO
         "fgetwln.c"
-        "flopen.c"
+        # "flopen.c" # TODO
         "fmtcheck.c"
         "fparseln.c"
-        "fpurge.c"
+        # "fpurge.c" # TODO
         "freezero.c"
-        "funopen.c"
+        # "funopen.c" # TODO
         "getbsize.c"
         "getentropy.c"
         "getentropy_win.c"
@@ -36,11 +36,11 @@ set(Source_Files "arc4random.c"
         "progname.c"
         "pwcache.c"
         "radixsort.c"
-        "readpassphrase.c"
+        # "readpassphrase.c"  # TODO
         "reallocarray.c"
         "reallocf.c"
         "recallocarray.c"
-        "setmode.c"
+        # "setmode.c" # TODO
         "setproctitle.c"
         "setproctitle_ctor.c"
         "stringlist.c"
@@ -62,6 +62,9 @@ if (MSVC OR CYGWIN OR CMAKE_SYSTEM_NAME STREQUAL "Windows"
         OR CMAKE_SYSTEM_NAME MATCHES "MINGW.*")
     list(APPEND Header_Files "arc4random_win.h")
     list(APPEND Source_Files "getentropy_win.c")
+    if (NOT CYGWIN)
+        list(APPEND Header_Files "${CMAKE_SOURCE_DIR}/include/bsd/win_shim/elf.h")
+    endif (NOT CYGWIN)
 elseif (LINUX)
     list(APPEND Header_Files "arc4random_linux.h")
     list(APPEND Source_Files "getentropy_linux.c")

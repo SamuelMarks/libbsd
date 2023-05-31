@@ -36,7 +36,12 @@
 #include <stdarg.h>
 #include <unistd.h>
 
+#if defined(_MSC_VER) || defined(__MINGW32__) || defined(__MSYS__)
+#include <bsd/libutil.h>
+#include <fcntl.h>
+#else
 #include <libutil.h>
+#endif
 
 static int
 lock_file(int fd, int flags)

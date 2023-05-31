@@ -28,7 +28,11 @@
 
 #include <errno.h>
 #include <ctype.h>
+#if defined(_MSC_VER) || defined(__MINGW32__) || defined(__MSYS__)
+#include <bsd/libutil.h>
+#else
 #include <libutil.h>
+#endif
 #include <stdint.h>
 #include <stdlib.h>
 

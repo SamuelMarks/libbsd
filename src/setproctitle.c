@@ -26,12 +26,15 @@
 #include <stddef.h>
 #include <stdarg.h>
 #include <stdbool.h>
-#include <stdlib.h>
-#include <stdio.h>
+
 #if defined(_MSC_VER) || defined(__MINGW32__) || defined(__MSYS__)
 #include <bsd/err.h>
+#include <bsd/stdlib.h>
+#include <bsd/stdio.h>
 #else
 #include <err.h>
+#include <stdio.h>
+#include <stdlib.h>
 #endif
 #include <unistd.h>
 #include <string.h>

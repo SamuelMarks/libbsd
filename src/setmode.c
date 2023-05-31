@@ -40,9 +40,15 @@
 #include <ctype.h>
 #include <errno.h>
 #include <signal.h>
-#include <stdlib.h>
 #include <limits.h>
 #include <unistd.h>
+
+#if defined(_MSC_VER) || defined(__MINGW32__) || defined(__MSYS__)
+#include <bsd/stdlib.h>
+#define sigset_t _sigset_t
+#else
+#include <stdlib.h>
+#endif
 
 #ifdef SETMODE_DEBUG
 #include <stdio.h>

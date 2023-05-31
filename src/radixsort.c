@@ -48,9 +48,13 @@
  */
 
 #include <sys/types.h>
-#include <stdlib.h>
 #include <stddef.h>
 #include <errno.h>
+#if defined(_MSC_VER) || defined(__MINGW32__) || defined(__MSYS__)
+#include <bsd/stdlib.h>
+#else
+#include <stdlib.h>
+#endif
 
 typedef struct {
 	const unsigned char **sa;

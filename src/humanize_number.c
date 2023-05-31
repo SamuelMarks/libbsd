@@ -41,7 +41,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <locale.h>
+#if defined(_MSC_VER) || defined(__MINGW32__) || defined(__MSYS__)
+#include <bsd/libutil.h>
+#else
 #include <libutil.h>
+#endif
 
 static const int maxscale = 6;
 

@@ -30,7 +30,11 @@
 #include <errno.h>
 #include <stdio.h>
 #include <string.h>
+#if defined(_MSC_VER) || defined(__MINGW32__) || defined(__MSYS__)
+#include <bsd/stdlib.h>
+#else
 #include <stdlib.h>
+#endif
 
 #define _DIAGASSERT(t)
 

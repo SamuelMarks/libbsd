@@ -34,7 +34,11 @@
 
 /* For compatibility with NetBSD, which defines humanize_number here. */
 #ifdef LIBBSD_OVERLAY
+#if defined(_MSC_VER) || defined(__MINGW32__) || defined(__MSYS__)
+#include <bsd/libutil.h>
+#else
 #include <libutil.h>
+#endif
 #else
 #include <bsd/libutil.h>
 #endif
