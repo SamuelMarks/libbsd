@@ -48,5 +48,7 @@
  * expecting either the compiler to place constructors there or the linker to
  * move them from .ctors to .init_array.
  */
+#if !defined(_MSC_VER) && !defined(__MINGW32__) && !defined(__MSYS__)
 void (*libbsd_init_func)(int argc, char *argv[], char *envp[])
 	__attribute__((__section__(".init_array"), __used__)) = setproctitle_init;
+#endif

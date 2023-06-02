@@ -17,7 +17,7 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-#include <config.h>
+#include <bsdConfig.h>
 
 #ifdef __linux__
 # include <sys/syscall.h>

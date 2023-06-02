@@ -61,7 +61,7 @@
 #include <assert.h>
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wcpp"
-#include <vis.h>
+#include <bsd/vis.h>
 #pragma GCC diagnostic pop
 #include <errno.h>
 #include <stdlib.h>

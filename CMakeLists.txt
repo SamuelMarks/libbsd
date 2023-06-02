@@ -44,7 +44,9 @@ else ()
     set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/lib")
 endif ()
 
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
+if (NOT Z_VCPKG_EXECUTABLE)
+    list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
+endif ()
 # configure a header file to pass the version number and arch only
 include("${CMAKE_SOURCE_DIR}/cmake/get_arch.cmake")
 get_arch()

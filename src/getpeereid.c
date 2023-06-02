@@ -28,8 +28,12 @@
 
 #include <sys/param.h>
 #include <sys/types.h>
+
+#if defined(_MSC_VER) || defined(__MINGW32__) || defined(__MSYS__)
+#else
 #include <sys/socket.h>
 #include <sys/un.h>
+#endif
 
 #include <errno.h>
 #include <unistd.h>
@@ -122,13 +126,69 @@ getpeereid(int s, uid_t *euid, gid_t *egid)
 	return 0;
 }
 #else
-#warning "This platform needs an implementation of getpeereid()"
-int
-getpeereid(int s, uid_t *euid, gid_t *egid)
-{
-	*euid = geteuid();
-	*egid = getegid();
 
-	return 0;
+/*-------------------------------------------------------------------------
+ *
+ * getpeereid.c
+ *		get peer userid for UNIX-domain socket connection
+ *
+ * Portions Copyright (c) 1996-2023, PostgreSQL Global Development Group
+ *
+ *
+ * IDENTIFICATION
+ *	  src/port/getpeereid.c
+ *
+ *-------------------------------------------------------------------------
+ */
+
+#include "c.h"
+
+#include <sys/param.h>
+#include <sys/socket.h>
+#include <sys/un.h>
+#include <unistd.h>
+#ifdef HAVE_UCRED_H
+#include <ucred.h>
+#endif
+#ifdef HAVE_SYS_UCRED_H
+#include <sys/ucred.h>
+#endif
+
+
+/*-------------------------------------------------------------------------
+ *
+ * getpeereid.c
+ *		get peer userid for UNIX-domain socket connection
+ *
+ * Portions Copyright (c) 1996-2023, PostgreSQL Global Development Group
+ *
+ *
+ * IDENTIFICATION
+ *	  src/port/getpeereid.c
+ *
+ *-------------------------------------------------------------------------
+ */
+int
+getpeereid(int sock, uid_t *uid, gid_t *gid)
+{
+    int
+    getpeereid(int s, uid_t *euid, gid_t *egid)
+    {
+        struct xucred xuc;
+        socklen_t xuclen;
+        int error;
+
+        xuclen = sizeof(xuc);
+        error = _getsockopt(s, SOL_LOCAL, LOCAL_PEERCRED, &xuc, &xuclen);
+        if (error != 0)
+            return (error);
+        if (xuc.cr_version != XUCRED_VERSION) {
+            errno = EINVAL;
+            return (-1);
+        }
+        *euid = xuc.cr_uid;
+        *egid = xuc.cr_gid;
+        return (0);
+    }
 }
 #endif

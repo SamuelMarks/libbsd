@@ -25,7 +25,6 @@ set(Source_Files "arc4random.c"
         "getbsize.c"
         "getentropy.c"
         "getentropy_win.c"
-        "getpeereid.c"
         "heapsort.c"
         "humanize_number.c"
         "inet_net_pton.c"
@@ -57,6 +56,12 @@ set(Source_Files "arc4random.c"
         "wcslcat.c"
         "wcslcpy.c")
 source_group("Source Files" FILES "${Source_Files}")
+
+if (NOT MSVC AND NOT CMAKE_SYSTEM_NAME STREQUAL "Windows"
+        AND NOT CMAKE_SYSTEM_NAME MATCHES "MINGW.*")
+    # No one seems to have an impl of this for Windows
+    list(APPEND Source_Files "getpeereid.c")
+endif ()
 
 if (MSVC OR CYGWIN OR CMAKE_SYSTEM_NAME STREQUAL "Windows"
         OR CMAKE_SYSTEM_NAME MATCHES "MINGW.*")
@@ -100,7 +105,11 @@ if (MINGW)
     get_filename_component(SYSTEM_ROOT_DIR "${SYSTEM_BIN_DIR}" DIRECTORY)
     list(APPEND CMAKE_PREFIX_PATH "${SYSTEM_ROOT_DIR}")
 endif ()
-find_package(PCRE2 REQUIRED)
+if (Z_VCPKG_EXECUTABLE)
+    find_package(pcre2 CONFIG REQUIRED)
+else ()
+    find_package(PCRE2 REQUIRED)
+endif ()
 
 include(GNUInstallDirs)
 target_include_directories(
