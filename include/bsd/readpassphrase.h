@@ -32,7 +32,7 @@
 #define RPP_STDIN       0x20		/* Read from stdin, not /dev/tty */
 
 #ifdef LIBBSD_OVERLAY
-#include <sys/cdefs.h>
+#include <bsd/sys/cdefs.h>
 #else
 #include <bsd/sys/cdefs.h>
 #endif

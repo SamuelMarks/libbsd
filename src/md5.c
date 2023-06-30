@@ -27,6 +27,7 @@
 #if defined(_MSC_VER) || defined(__MINGW32__) || defined(__MSYS__)
 #include <bsd/md5.h>
 #include <stdio.h>
+#include <sys/types.h>
 
 #else
 #include <md5.h>
@@ -34,7 +35,9 @@
 
 #include "local-link.h"
 
+#ifndef _MSC_VER
 #pragma GCC diagnostic ignored "-Wmissing-prototypes"
+#endif /* ! _MSC_VER */
 
 void
 libbsd_MD5Init(MD5_CTX *context)

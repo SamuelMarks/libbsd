@@ -26,7 +26,7 @@
 
 #include <sys/types.h>
 #include <assert.h>
-#include <unistd.h>
+#include <bsd/unistd.h>
 #include <stdlib.h>
 #include <string.h>
 

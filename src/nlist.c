@@ -27,9 +27,9 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <bsd/sys/cdefs.h>
 
-#include <sys/param.h>
+#include <bsd/sys/param.h>
 #include <sys/stat.h>
 
 #include <errno.h>
@@ -37,7 +37,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
+#include <bsd/unistd.h>
 
 #include "local-elf.h"
 

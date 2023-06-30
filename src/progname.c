@@ -31,7 +31,7 @@
  * <https://sourceware.org/ml/libc-alpha/2006-03/msg00125.html>.
  */
 
-#include <sys/param.h>
+#include <bsd/sys/param.h>
 #include <errno.h>
 #include <string.h>
 #include <stdlib.h>

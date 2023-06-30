@@ -27,7 +27,7 @@
 #ifndef LIBBSD_LOCAL_LINK_H
 #define LIBBSD_LOCAL_LINK_H
 
-#include <sys/cdefs.h>
+#include <bsd/sys/cdefs.h>
 
 #ifdef __ELF__
 #define libbsd_link_warning(symbol, msg) \

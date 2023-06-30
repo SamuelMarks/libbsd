@@ -24,9 +24,9 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <bsd/sys/cdefs.h>
 
-#include <sys/param.h>
+#include <bsd/sys/param.h>
 #include <sys/types.h>
 
 #if defined(_MSC_VER) || defined(__MINGW32__) || defined(__MSYS__)
@@ -36,7 +36,7 @@
 #endif
 
 #include <errno.h>
-#include <unistd.h>
+#include <bsd/unistd.h>
 
 #if defined(SO_PEERCRED)
 /* Linux and OpenBSD */
@@ -143,10 +143,10 @@ getpeereid(int s, uid_t *euid, gid_t *egid)
 
 #include "c.h"
 
-#include <sys/param.h>
+#include <bsd/sys/param.h>
 #include <sys/socket.h>
 #include <sys/un.h>
-#include <unistd.h>
+#include <bsd/unistd.h>
 #ifdef HAVE_UCRED_H
 #include <ucred.h>
 #endif

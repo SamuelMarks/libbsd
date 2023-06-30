@@ -25,11 +25,11 @@
  */
 
 #ifdef LIBBSD_OVERLAY
-#include <sys/cdefs.h>
+#include <bsd/sys/cdefs.h>
 #if __has_include_next(<getopt.h>)
 #include_next <getopt.h>
 #endif
-#include <unistd.h>
+#include <bsd/unistd.h>
 #else
 #include <bsd/sys/cdefs.h>
 #if __has_include(<getopt.h>)

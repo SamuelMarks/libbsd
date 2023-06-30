@@ -30,7 +30,7 @@
  *
  */
 
-#include <sys/cdefs.h>
+#include <bsd/sys/cdefs.h>
 #include <sys/types.h>
 
 #if defined(_MSC_VER) || defined(__MINGW32__) || defined(__MSYS__)

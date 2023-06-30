@@ -202,7 +202,7 @@ AC_CHECK_DECL([F_CLOSEM], [
 ]])
 
 AC_CHECK_DECLS([environ], [], [], [[
-#include <unistd.h>
+#include <bsd/unistd.h>
 ]])
 
 AC_CACHE_CHECK([for GNU .init_array section support],

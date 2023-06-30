@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <bsd/sys/cdefs.h>
 #include <sys/types.h>
 
 #include <assert.h>
@@ -37,10 +37,14 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <errno.h>
+#ifndef _MSC_VER
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wcpp"
-#include <vis.h>
+#endif /* !_MSC_VER */
+#include <bsd/vis.h>
+#ifndef _MSC_VER
 #pragma GCC diagnostic pop
+#endif /* !_MSC_VER */
 
 #include "local-link.h"
 

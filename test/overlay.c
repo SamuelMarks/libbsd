@@ -39,12 +39,12 @@
 #include <stdint.h>
 
 /* Include libbsd overlayed headers that might get partially included. */
-#include <sys/cdefs.h>
+#include <bsd/sys/cdefs.h>
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
+#include <bsd/unistd.h>
 
 int
 main(int argc, char *argv[])

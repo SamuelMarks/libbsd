@@ -21,7 +21,7 @@
 #include <signal.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
+#include <bsd/unistd.h>
 
 #define ASSERT_EQ(a, b) assert((a) == (b))
 #define ASSERT_NE(a, b) assert((a) != (b))

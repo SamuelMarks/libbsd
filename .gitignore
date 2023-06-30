@@ -26,3 +26,4 @@ config.*
 format.ld
 libtool
 stamp-h1
+vcpkg_installed

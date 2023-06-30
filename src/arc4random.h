@@ -27,7 +27,7 @@
 #ifndef LIBBSD_ARC4RANDOM_H
 #define LIBBSD_ARC4RANDOM_H
 
-#include <sys/param.h>
+#include <bsd/sys/param.h>
 
 int
 getentropy(void *buf, size_t len);

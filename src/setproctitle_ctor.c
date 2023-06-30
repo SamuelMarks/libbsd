@@ -24,7 +24,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <unistd.h>
+#include <bsd/unistd.h>
 
 /*
  * The automatic initialization cannot be part of the main shared library,

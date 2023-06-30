@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <bsd/sys/cdefs.h>
 
 /*
  * Radixsort routines.

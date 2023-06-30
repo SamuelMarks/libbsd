@@ -24,7 +24,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <getopt.h>
+#include <bsd/getopt.h>
 
 int optreset = 0;
 

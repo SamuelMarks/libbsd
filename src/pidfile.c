@@ -24,8 +24,8 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-#include <sys/param.h>
+#include <bsd/sys/cdefs.h>
+#include <bsd/sys/param.h>
 #include <sys/file.h>
 #include <sys/stat.h>
 
@@ -45,7 +45,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include <unistd.h>
+#include <bsd/unistd.h>
 
 struct pidfh {
 	int	pf_fd;

@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <bsd/sys/cdefs.h>
 
 /*
  * Hybrid exponential search/linear search merge sort with hybrid

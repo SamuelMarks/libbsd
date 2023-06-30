@@ -35,7 +35,7 @@
  * NetBSD: src/common/lib/libc/stdlib/_strtoul.h,v 1.7 2013/05/17 12:55:56 joe…
  */
 
-#include <sys/cdefs.h>
+#include <bsd/sys/cdefs.h>
 
 #include <stddef.h>
 #include <assert.h>

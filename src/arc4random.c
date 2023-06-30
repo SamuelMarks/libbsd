@@ -30,9 +30,9 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
+#include <bsd/unistd.h>
 #include <sys/types.h>
-#include <sys/time.h>
+#include <bsd/sys/time.h>
 
 #define KEYSTREAM_ONLY
 #include "chacha_private.h"
@@ -67,6 +67,7 @@ static struct _rsx {
 static inline int _rs_allocate(struct _rs **, struct _rsx **);
 static inline void _rs_forkdetect(void);
 #include "arc4random.h"
+#include "bsd/string.h"
 
 static inline void
 _rs_init(unsigned char *buf, size_t n)

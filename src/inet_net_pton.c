@@ -17,7 +17,7 @@
  *	from FreeBSD: inet_net_pton.c,v 1.9 2003/09/15 23:38:06 fenner Exp
  */
 
-#include <sys/cdefs.h>
+#include <bsd/sys/cdefs.h>
 #include <sys/types.h>
 #ifdef _WIN32
 #define WIN32_LEAN_AND_MEAN

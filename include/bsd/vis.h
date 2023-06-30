@@ -83,7 +83,7 @@
 #define	UNVIS_END	_VIS_END	/* no more characters */
 
 #ifdef LIBBSD_OVERLAY
-#include <sys/cdefs.h>
+#include <bsd/sys/cdefs.h>
 #else
 #include <bsd/sys/cdefs.h>
 #endif
@@ -105,6 +105,11 @@
 #undef LIBBSD_NETBSD_VIS
 #elif !defined(LIBBSD_NETBSD_VIS)
 #warning "NetBSD added incompatible strnvis() and strnunvis(), please see <bsd/vis.h> for more detils."
+#endif
+
+#if defined(_MSC_VER) || defined(__MINGW32__) || defined(__MSYS__)
+#include <BaseTsd.h>
+typedef SSIZE_T ssize_t;
 #endif
 
 __BEGIN_DECLS

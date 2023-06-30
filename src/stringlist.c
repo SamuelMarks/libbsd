@@ -29,7 +29,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <bsd/sys/cdefs.h>
 
 #include <assert.h>
 #if defined(_MSC_VER) || defined(__MINGW32__) || defined(__MSYS__)

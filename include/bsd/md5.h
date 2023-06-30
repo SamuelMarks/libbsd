@@ -57,7 +57,7 @@
  * documentation and/or software.
  */
 
-#include <sys/cdefs.h>
+#include <bsd/sys/cdefs.h>
 #include <stdint.h>
 
 #define MD5_DIGEST_LENGTH		16

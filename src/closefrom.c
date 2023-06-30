@@ -29,7 +29,7 @@
 #include <fcntl.h>
 #include <limits.h>
 #include <stdlib.h>
-#include <unistd.h>
+#include <bsd/unistd.h>
 #ifdef HAVE_PSTAT_GETPROC
 # include <sys/param.h>
 # include <sys/pstat.h>

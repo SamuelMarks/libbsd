@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <bsd/sys/cdefs.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 
@@ -41,7 +41,7 @@
 #include <errno.h>
 #include <signal.h>
 #include <limits.h>
-#include <unistd.h>
+#include <bsd/unistd.h>
 
 #if defined(_MSC_VER) || defined(__MINGW32__) || defined(__MSYS__)
 #include <bsd/stdlib.h>

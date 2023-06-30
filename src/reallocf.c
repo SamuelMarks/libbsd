@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <bsd/sys/cdefs.h>
 
 #include <stdlib.h>
 

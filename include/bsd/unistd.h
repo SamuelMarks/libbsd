@@ -26,14 +26,14 @@
  */
 
 #ifdef LIBBSD_OVERLAY
-#include <sys/cdefs.h>
+#include <bsd/sys/cdefs.h>
 #if __has_include_next(<unistd.h>)
 #include_next <unistd.h>
 #endif
 #else
 #include <bsd/sys/cdefs.h>
 #if __has_include(<unistd.h>)
-#include <unistd.h>
+#include <bsd/unistd.h>
 #endif
 #endif
 
@@ -58,8 +58,10 @@ extern int optreset;
 int bsd_getopt(int argc, char * const argv[], const char *shortopts);
 #endif
 
+#if !defined(_MSC_VER) && !defined(__MINGW32__) && !defined(__MSYS__)
 mode_t getmode(const void *set, mode_t mode);
 void *setmode(const char *mode_str);
+#endif
 
 #if !defined(__GLIBC__) || \
     !__GLIBC_PREREQ(2, 34) || \
@@ -67,6 +69,7 @@ void *setmode(const char *mode_str);
 void closefrom(int lowfd);
 #endif
 
+#if !defined(_MSC_VER) && !defined(__MINGW32__) && !defined(__MSYS__)
 /* Compatibility with sendmail implementations. */
 #define initsetproctitle(c, a, e) setproctitle_init((c), (a), (e))
 
@@ -75,6 +78,8 @@ void setproctitle(const char *fmt, ...)
 	__printflike(1, 2);
 
 int getpeereid(int s, uid_t *euid, gid_t *egid);
+#endif /* !defined(_MSC_VER) && !defined(__MINGW32__) && !defined(__MSYS__) */
+
 __END_DECLS
 
 #endif

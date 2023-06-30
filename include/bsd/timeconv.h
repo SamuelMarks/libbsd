@@ -42,7 +42,7 @@
 #define LIBBSD_TIMECONV_H
 
 #ifdef LIBBSD_OVERLAY
-#include <sys/cdefs.h>
+#include <bsd/sys/cdefs.h>
 #else
 #include <bsd/sys/cdefs.h>
 #endif

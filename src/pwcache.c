@@ -47,7 +47,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
+#if !defined(_MSC_VER) && !defined(__MINGW32__) && !defined(__MSYS__)
+#include <bsd/unistd.h>
+#endif
 
 /*
  * Constants and data structures used to implement group and password file

@@ -28,31 +28,27 @@ set(Source_Files "arc4random.c"
         "heapsort.c"
         "humanize_number.c"
         "inet_net_pton.c"
-        "md5.c"
         "merge.c"
         "nlist.c"
-        "pidfile.c"
+
         "progname.c"
-        "pwcache.c"
+
         "radixsort.c"
         # "readpassphrase.c"  # TODO
         "reallocarray.c"
         "reallocf.c"
         "recallocarray.c"
-        # "setmode.c" # TODO
-        "setproctitle.c"
-        "setproctitle_ctor.c"
+
         "stringlist.c"
         "strlcat.c"
         "strlcpy.c"
-        "strmode.c"
         "strnstr.c"
         "strtoi.c"
         "strtonum.c"
         "strtou.c"
         "timeconv.c"
-        "unvis.c"
-        "vis.c"
+        # "unvis.c" # TODO
+        # "vis.c"  # TODO
         "wcslcat.c"
         "wcslcpy.c")
 source_group("Source Files" FILES "${Source_Files}")
@@ -60,7 +56,17 @@ source_group("Source Files" FILES "${Source_Files}")
 if (NOT MSVC AND NOT CMAKE_SYSTEM_NAME STREQUAL "Windows"
         AND NOT CMAKE_SYSTEM_NAME MATCHES "MINGW.*")
     # No one seems to have an impl of this for Windows
-    list(APPEND Source_Files "getpeereid.c")
+    list(APPEND Source_Files
+            "getpeereid.c"
+            "md5.c"
+            "pidfile.c"
+            "pwcache.c"
+            "setmode.c"
+            "setproctitle.c"
+            "setproctitle_ctor.c")
+    if (NOT APPLE)
+        list(APPEND Source_Files "strmode.c")
+    endif (NOT APPLE)
 endif ()
 
 if (MSVC OR CYGWIN OR CMAKE_SYSTEM_NAME STREQUAL "Windows"
@@ -70,6 +76,7 @@ if (MSVC OR CYGWIN OR CMAKE_SYSTEM_NAME STREQUAL "Windows"
     if (NOT CYGWIN)
         list(APPEND Header_Files "${CMAKE_SOURCE_DIR}/include/bsd/win_shim/elf.h")
     endif (NOT CYGWIN)
+    add_compile_definitions("-DLIBBSD_NETBSD_VIS")
 elseif (LINUX)
     list(APPEND Header_Files "arc4random_linux.h")
     list(APPEND Source_Files "getentropy_linux.c")
@@ -106,20 +113,17 @@ if (MINGW)
     list(APPEND CMAKE_PREFIX_PATH "${SYSTEM_ROOT_DIR}")
 endif ()
 if (Z_VCPKG_EXECUTABLE)
-    find_package(pcre2 CONFIG REQUIRED)
+    find_package(PCRE2 CONFIG REQUIRED)
 else ()
     find_package(PCRE2 REQUIRED)
 endif ()
 
 include(GNUInstallDirs)
+
 target_include_directories(
         "${LIBRARY_NAME}"
         PUBLIC
-        "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>"
-        "$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR/include}>"
-        "$<BUILD_INTERFACE:${CMAKE_BINARY_DIR}>"
         "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>"
-        "${PCRE2_INCLUDE_DIRS}"
 )
 
 set(installable_libs
@@ -127,7 +131,7 @@ set(installable_libs
         "${PROJECT_NAME}_netinet"
         "${PROJECT_NAME}_sys")
 
-target_link_libraries("${LIBRARY_NAME}" "${PCRE2_LIBRARIES}" "${installable_libs}")
+target_link_libraries("${LIBRARY_NAME}" "${PCRE2_LIBRARIES}" "${PROJECT_NAME}_headers" "${installable_libs}")
 
 list(APPEND installable_libs "${LIBRARY_NAME}")
 

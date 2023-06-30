@@ -55,14 +55,18 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <bsd/sys/cdefs.h>
 #include <sys/types.h>
 
 #include <assert.h>
+#ifndef _MSC_VER
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wcpp"
+#endif /* !_MSC_VER */
 #include <bsd/vis.h>
+#ifndef _MSC_VER
 #pragma GCC diagnostic pop
+#endif /* !_MSC_VER */
 #include <errno.h>
 #include <stdlib.h>
 #include <wchar.h>

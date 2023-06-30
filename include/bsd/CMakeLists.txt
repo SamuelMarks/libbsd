@@ -4,7 +4,6 @@ set(Header_Files "bitstring.h"
         "bsd.h"
         "err.h"
         "getopt.h"
-        "grp.h"
         "inttypes.h"
         "libutil.h"
         "md5.h"
@@ -17,23 +16,31 @@ set(Header_Files "bitstring.h"
         "stringlist.h"
         "timeconv.h"
         "unistd.h"
-        "vis.h"
+        # "vis.h"  # TODO
         "wchar.h")
+
+if (NOT MSVC AND NOT CMAKE_SYSTEM_NAME STREQUAL "Windows"
+        AND NOT CMAKE_SYSTEM_NAME MATCHES "MINGW.*")
+    # No one seems to have an impl of this for Windows
+    list(APPEND Header_File "grp.h")
+endif ()
+
 source_group("Header Files" FILES "${Header_Files}")
 
 add_library("${LIBRARY_NAME}" INTERFACE "${Header_Files}")
+
 
 include(GNUInstallDirs)
 target_include_directories(
         "${LIBRARY_NAME}"
         INTERFACE
-        #"$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR/include}>"
+        #"$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include}>"
         "$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}>"
         "$<BUILD_INTERFACE:${CMAKE_BINARY_DIR}>"
         "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>"
 )
 #                                  C:\Users\samue\repos\libbsd\include\bsd\err.h
-message(STATUS "CMAKE_SOURCE_DIR/include = ${CMAKE_SOURCE_DIR}/include")
+message(STATUS "CMAKE_SOURCE_DIR}/include = ${CMAKE_SOURCE_DIR}/include")
 
 add_subdirectory("netinet")
 add_subdirectory("sys")

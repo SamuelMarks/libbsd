@@ -21,7 +21,7 @@
  */
 
 #include <sys/types.h>
-#include <sys/param.h>
+#include <bsd/sys/param.h>
 #include <sys/ioctl.h>
 #include <sys/resource.h>
 #include <sys/syscall.h>
@@ -40,7 +40,7 @@
 #include <signal.h>
 #include <string.h>
 #include <errno.h>
-#include <unistd.h>
+#include <bsd/unistd.h>
 #include <time.h>
 #include <sys/sha2.h>
 #define SHA512_Init SHA512Init

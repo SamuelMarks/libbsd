@@ -17,7 +17,7 @@ include(GNUInstallDirs)
 target_include_directories(
         "${LIBRARY_NAME}"
         INTERFACE
-        "$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR/include}>"
+        "$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include}>"
         "$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}>"
         "$<BUILD_INTERFACE:${CMAKE_BINARY_DIR}>"
         "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>"

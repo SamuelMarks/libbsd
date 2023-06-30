@@ -29,7 +29,7 @@
 #include <signal.h>
 #include <string.h>
 #include <termios.h>
-#include <unistd.h>
+#include <bsd/unistd.h>
 #include <readpassphrase.h>
 
 #ifndef TCSASOFT

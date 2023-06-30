@@ -6,10 +6,18 @@
 
 #include <string.h>
 
-__attribute__((__weak__)) void
+#ifndef BSD_WEAK
+#  if defined(_MSC_VER) || defined(__MINGW32__) || defined(__MSYS__)
+#define BSD_WEAK /* __declspec(selectany)*/
+#  else
+#define BSD_WEAK __attribute__((__weak__))
+#  endif
+#endif /* !BSD_WEAK */
+
+ void
 __explicit_bzero_hook(void *, size_t);
 
-__attribute__((__weak__)) void
+BSD_WEAK void
 __explicit_bzero_hook(void *buf, size_t len)
 {
 }

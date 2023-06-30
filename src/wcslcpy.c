@@ -28,7 +28,7 @@
  *	from NetBSD: wcslcpy.c,v 1.1 2000/12/23 23:14:36 itojun Exp
  */
 
-#include <sys/cdefs.h>
+#include <bsd/sys/cdefs.h>
 #include <sys/types.h>
 #include <wchar.h>
 

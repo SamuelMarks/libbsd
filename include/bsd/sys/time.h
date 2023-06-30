@@ -70,7 +70,7 @@
 #define	timerisset(tvp)		((tvp)->tv_sec || (tvp)->tv_usec)
 #endif
 
-#ifndef timercmp
+#if !defined(timercmp) && !defined(_MSC_VER) && !defined(__MINGW32__) && !defined(__MSYS__)
 #define	timercmp(tvp, uvp, cmp)						\
 	(((tvp)->tv_sec == (uvp)->tv_sec) ?				\
 	    ((tvp)->tv_usec cmp (uvp)->tv_usec) :			\

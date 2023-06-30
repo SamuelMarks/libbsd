@@ -31,12 +31,13 @@
 #include <bsd/err.h>
 #include <bsd/stdlib.h>
 #include <bsd/stdio.h>
+#define strdup _strdup
 #else
 #include <err.h>
 #include <stdio.h>
 #include <stdlib.h>
 #endif
-#include <unistd.h>
+#include <bsd/unistd.h>
 #include <string.h>
 #include "local-link.h"
 

@@ -24,7 +24,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <bsd/sys/cdefs.h>
 
 #include <assert.h>
 #include <errno.h>
@@ -32,6 +32,8 @@
 #include <string.h>
 #if defined(_MSC_VER) || defined(__MINGW32__) || defined(__MSYS__)
 #include <bsd/stdlib.h>
+#include <BaseTsd.h>
+typedef SSIZE_T ssize_t;
 #else
 #include <stdlib.h>
 #endif

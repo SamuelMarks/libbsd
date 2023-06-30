@@ -34,7 +34,7 @@
 #define LIBBSD_STRING_H
 
 #ifdef LIBBSD_OVERLAY
-#include <sys/cdefs.h>
+#include <bsd/sys/cdefs.h>
 #else
 #include <bsd/sys/cdefs.h>
 #endif
@@ -46,9 +46,9 @@ size_t strlcpy(char *dst, const char *src, size_t siz);
 size_t strlcat(char *dst, const char *src, size_t siz);
 #endif
 char *strnstr(const char *str, const char *find, size_t str_len);
-#ifndef __APPLE__
+#if !defined(__APPLE__) && !defined(_MSC_VER)
 void strmode(mode_t mode, char *str);
-#endif
+#endif /* !defined(__APPLE__) && !defined(_MSC_VER) */
 
 #if !defined(__GLIBC__) || \
     !__GLIBC_PREREQ(2, 25) || \

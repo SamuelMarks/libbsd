@@ -25,7 +25,7 @@
  */
 
 #ifdef LIBBSD_OVERLAY
-#include <sys/cdefs.h>
+#include <bsd/sys/cdefs.h>
 #if __has_include_next(<pwd.h>)
 #include_next <pwd.h>
 #endif
