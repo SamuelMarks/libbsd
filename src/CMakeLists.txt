@@ -1,12 +1,14 @@
 set(LIBRARY_NAME "${PROJECT_NAME}")
 
-set(Header_Files "arc4random.h"
+set(Header_Files
+        "arc4random.h"
         "chacha_private.h"
         "local-elf.h"
         "local-link.h")
 source_group("Header Files" FILES "${Header_Files}")
 
-set(Source_Files "arc4random.c"
+set(Source_Files
+        "arc4random.c"
         "arc4random_uniform.c"
         "bsd_getopt.c"
         "closefrom.c"
@@ -14,17 +16,12 @@ set(Source_Files "arc4random.c"
         "err.c"
         "expand_number.c"
         "explicit_bzero.c"
-        # "fgetln.c" # TODO
         "fgetwln.c"
-        # "flopen.c" # TODO
         "fmtcheck.c"
         "fparseln.c"
-        # "fpurge.c" # TODO
         "freezero.c"
-        # "funopen.c" # TODO
         "getbsize.c"
         "getentropy.c"
-        "getentropy_win.c"
         "heapsort.c"
         "humanize_number.c"
         "inet_net_pton.c"
@@ -34,7 +31,6 @@ set(Source_Files "arc4random.c"
         "progname.c"
 
         "radixsort.c"
-        # "readpassphrase.c"  # TODO
         "reallocarray.c"
         "reallocf.c"
         "recallocarray.c"
@@ -47,13 +43,12 @@ set(Source_Files "arc4random.c"
         "strtonum.c"
         "strtou.c"
         "timeconv.c"
-        # "unvis.c" # TODO
-        # "vis.c"  # TODO
         "wcslcat.c"
         "wcslcpy.c")
 source_group("Source Files" FILES "${Source_Files}")
 
-if (NOT MSVC AND NOT CMAKE_SYSTEM_NAME STREQUAL "Windows"
+if (NOT MSVC
+        AND NOT CMAKE_SYSTEM_NAME STREQUAL "Windows"
         AND NOT CMAKE_SYSTEM_NAME MATCHES "MINGW.*")
     # No one seems to have an impl of this for Windows
     list(APPEND Source_Files
@@ -63,7 +58,17 @@ if (NOT MSVC AND NOT CMAKE_SYSTEM_NAME STREQUAL "Windows"
             "pwcache.c"
             "setmode.c"
             "setproctitle.c"
-            "setproctitle_ctor.c")
+            "setproctitle_ctor.c"
+
+            # These can have Windows impl but need to work on them
+            "fgetln.c"          # TODO
+            "flopen.c"          # TODO
+            "fpurge.c"          # TODO
+            "funopen.c"         # TODO
+            "readpassphrase.c"  # TODO
+            "unvis.c"           # TODO
+            "vis.c"             # TODO
+    )
     if (NOT APPLE)
         list(APPEND Source_Files "strmode.c")
     endif (NOT APPLE)
@@ -84,12 +89,18 @@ elseif (APPLE)
     list(APPEND Source_Files "getentropy_osx.c")
 else ()
     list(APPEND Header_Files "arc4random_unix.h")
-    #
-#        "getentropy_aix.c"
-#        "getentropy_bsd.c"
-#        "getentropy_hpux.c"
-#        "getentropy_hurd.c"
-#        "getentropy_solaris.c"
+
+    if (BSD)
+        list(APPEND Source_Files "getentropy_bsd.c")
+    elseif (CMAKE_SYSTEM_NAME STREQUAL "AIX")
+        list(APPEND Source_Files "getentropy_aix.c")
+    elseif (CMAKE_SYSTEM_NAME STREQUAL "SunOS" OR CMAKE_SYSTEM_NAME STREQUAL "Solaris")
+        list(APPEND Source_Files "getentropy_solaris.c")
+    elseif (CMAKE_SYSTEM_NAME STREQUAL "HP-UX")
+        list(APPEND Source_Files "getentropy_hpux.c")
+    else ()  # GNU Hurd
+        list(APPEND Source_Files "getentropy_hurd.c")
+    endif ()
 endif ()
 
 add_library("${LIBRARY_NAME}" "${Header_Files}" "${Source_Files}")
@@ -112,17 +123,17 @@ if (MINGW)
     get_filename_component(SYSTEM_ROOT_DIR "${SYSTEM_BIN_DIR}" DIRECTORY)
     list(APPEND CMAKE_PREFIX_PATH "${SYSTEM_ROOT_DIR}")
 endif ()
-if (Z_VCPKG_EXECUTABLE)
-    find_package(PCRE2 CONFIG REQUIRED)
-else ()
-    find_package(PCRE2 REQUIRED)
-endif ()
+
+include("${CMAKE_SOURCE_DIR}/cmake/modules/FindPCRE2.cmake")
+#find_package(PCRE2 CONFIG REQUIRED)
 
 include(GNUInstallDirs)
 
 target_include_directories(
         "${LIBRARY_NAME}"
         PUBLIC
+        "$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>"
+        "$<BUILD_INTERFACE:${CMAKE_BINARY_DIR}>"
         "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>"
 )
 
@@ -130,8 +141,7 @@ set(installable_libs
         "${PROJECT_NAME}_headers"
         "${PROJECT_NAME}_netinet"
         "${PROJECT_NAME}_sys")
-
-target_link_libraries("${LIBRARY_NAME}" "${PCRE2_LIBRARIES}" "${PROJECT_NAME}_headers" "${installable_libs}")
+target_link_libraries("${LIBRARY_NAME}" "${PCRE2_LIBRARIES}" "${PROJECT_NAME}_headers" ${installable_libs})
 
 list(APPEND installable_libs "${LIBRARY_NAME}")
 

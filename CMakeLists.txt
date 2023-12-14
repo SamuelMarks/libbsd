@@ -51,7 +51,7 @@ endif ()
 include("${CMAKE_SOURCE_DIR}/cmake/get_arch.cmake")
 get_arch()
 configure_file(
-        "${CMAKE_CURRENT_SOURCE_DIR}/cmake/config.h.in"
+        "${CMAKE_CURRENT_SOURCE_DIR}/cmake/bsd_config.h.in"
         "${PROJECT_NAME}Config.h"
 )
 
@@ -89,15 +89,15 @@ set(CPACK_PACKAGE_VERSION_MAJOR "${${PROJECT_NAME}_VERSION_MAJOR}")
 set(CPACK_PACKAGE_VERSION_MINOR "${${PROJECT_NAME}_VERSION_MINOR}")
 set(CPACK_RESOURCE_FILE_README "${CMAKE_CURRENT_SOURCE_DIR}/cmake/README.txt")
 set(CPACK_RESOURCE_FILE_WELCOME "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Welcome.txt")
-set(CPACK_PACKAGE_CONTACT "https://github.com/offscale/${PROJECT_NAME}")
+set(CPACK_PACKAGE_CONTACT "https://github.com/SamuelMarks/${PROJECT_NAME}")
 
 include(CPack)
 include(CMakePackageConfigHelpers)
 
 # generate the config file that is includes the exports
 configure_package_config_file(
-        "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Config.cmake.in"
-        "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
+        "${CMAKE_SOURCE_DIR}/cmake/Config.cmake.in"
+        "${CMAKE_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
         INSTALL_DESTINATION "${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME}"
         NO_SET_AND_CHECK_MACRO
         NO_CHECK_REQUIRED_COMPONENTS_MACRO

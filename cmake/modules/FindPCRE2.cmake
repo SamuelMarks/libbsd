@@ -1,11 +1,37 @@
-# - Find pcre
+# - Find pcre (Perl Compatible Regular Expressions)
 # Find the native PCRE2 headers and libraries.
 #
 # PCRE2_INCLUDE_DIRS    - where to find pcre.h, etc.
 # PCRE2_LIBRARIES   - List of libraries when using pcre.
 # PCRE2_FOUND   - True if pcre found.
 include(FindPackageHandleStandardArgs)
-
+message(STATUS "my FindPCRE")
+set(SEARCH_PATH_FOR_INCLUDE "")
+set(SEARCH_PATH_FOR_LIBRARY "")
+if (DEFINED VCPKG_INSTALLED_DIR)
+	foreach (p ${VCPKG_CMAKE_FIND_ROOT_PATH})
+		list(APPEND SEARCH_PATH_FOR_INCLUDE "${p}/include")
+		list(APPEND SEARCH_PATH_FOR_LIBRARY "${p}/lib")
+	endforeach (p ${VCPKG_CMAKE_FIND_ROOT_PATH})
+endif (DEFINED VCPKG_INSTALLED_DIR)
+list(APPEND SEARCH_PATH_FOR_INCLUDE
+		"/usr/include"
+		"/usr/local/include"
+		"/opt/local/include"
+		"/sw/include"
+		"${CMAKE_INCLUDE_PATH}"
+		"${CMAKE_INSTALL_PREFIX}/include"
+)
+list(APPEND SEARCH_PATH_FOR_LIBRARY
+		"/usr/lib"
+		"/usr/lib64"
+		"/usr/local/lib"
+		"/usr/local/lib64"
+		"/opt/local/lib"
+		"/sw/lib"
+		"${CMAKE_LIBRARY_PATH}"
+		"${CMAKE_INSTALL_PREFIX}/lib"
+)
 if(PCRE2_LIBRARIES AND PCRE2_INCLUDE_DIRS)
 	# in cache already
 	set(PCRE2_FOUND TRUE)
@@ -14,12 +40,7 @@ else()
 			NAMES
 			pcre2.h
 			PATHS
-			/usr/include
-			/usr/local/include
-			/opt/local/include
-			/sw/include
-			${CMAKE_INCLUDE_PATH}
-			${CMAKE_INSTALL_PREFIX}/include)
+			${SEARCH_PATHS_FOR_INCLUDE})
 
 	# Look for the library.
 	find_library(PCRE2_LIBRARY
@@ -28,14 +49,7 @@ else()
 			pcre2-8
 			libpcre2-posix
 			PATHS
-			/usr/lib
-			/usr/lib64
-			/usr/local/lib
-			/usr/local/lib64
-			/opt/local/lib
-			/sw/lib
-			${CMAKE_LIBRARY_PATH}
-			${CMAKE_INSTALL_PREFIX}/lib)
+			${SEARCH_PATHS_FOR_LIBRARY})
 
 	if(PCRE2_INCLUDE_DIR AND PCRE2_LIBRARY)
 		# learn pcre2 version

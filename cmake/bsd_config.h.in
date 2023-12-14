@@ -1,0 +1,13 @@
+#ifndef bsd_CONFIG_H
+#define bsd_CONFIG_H
+
+#define bsd_VERSION_MAJOR @bsd_VERSION_MAJOR@
+#define bsd_VERSION_MINOR @bsd_VERSION_MINOR@
+#define bsd_VERSION_PATCH @bsd_VERSION_PATCH@
+#define bsd_VERSION       "@bsd_VERSION@"
+
+#ifndef _@TARGET_ARCH@_
+#define _@TARGET_ARCH@_
+#endif /* _@TARGET_ARCH@_ */
+
+#endif /* !bsd_CONFIG_H */

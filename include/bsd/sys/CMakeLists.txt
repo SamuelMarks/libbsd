@@ -1,7 +1,8 @@
 get_filename_component(lib_name "${CMAKE_CURRENT_SOURCE_DIR}" NAME)
 set(LIBRARY_NAME "${PROJECT_NAME}_${lib_name}")
 
-set(Header_Files "bitstring.h"
+set(Header_Files
+        "bitstring.h"
         "cdefs.h"
         "endian.h"
         "param.h"
@@ -14,14 +15,14 @@ source_group("Header Files" FILES "${Header_Files}")
 add_library("${LIBRARY_NAME}" INTERFACE "${Header_Files}")
 
 include(GNUInstallDirs)
-target_include_directories(
-        "${LIBRARY_NAME}"
-        INTERFACE
-        "$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include}>"
-        "$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}>"
-        "$<BUILD_INTERFACE:${CMAKE_BINARY_DIR}>"
-        "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>"
-)
+#target_include_directories(
+#        "${LIBRARY_NAME}"
+#        INTERFACE
+#        "$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include}>"
+#        "$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}>"
+#        "$<BUILD_INTERFACE:${CMAKE_BINARY_DIR}>"
+#        "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>"
+#)
 
 set_target_properties(
         "${LIBRARY_NAME}"

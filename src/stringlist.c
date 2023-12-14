@@ -40,11 +40,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#if defined(_MSC_VER) || defined(__MINGW32__) || defined(__MSYS__)
 #include <bsd/stringlist.h>
-#else
-#include <stringlist.h>
-#endif
 
 #define _DIAGASSERT(t)
 

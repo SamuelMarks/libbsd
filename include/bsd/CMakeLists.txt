@@ -31,19 +31,20 @@ add_library("${LIBRARY_NAME}" INTERFACE "${Header_Files}")
 
 
 include(GNUInstallDirs)
-target_include_directories(
-        "${LIBRARY_NAME}"
-        INTERFACE
-        #"$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include}>"
-        "$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}>"
-        "$<BUILD_INTERFACE:${CMAKE_BINARY_DIR}>"
-        "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>"
-)
+#target_include_directories(
+#        "${LIBRARY_NAME}"
+#        INTERFACE
+#        #"$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include}>"
+#        "$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}>"
+#        "$<BUILD_INTERFACE:${CMAKE_BINARY_DIR}>"
+#        "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>"
+#)
 #                                  C:\Users\samue\repos\libbsd\include\bsd\err.h
-message(STATUS "CMAKE_SOURCE_DIR}/include = ${CMAKE_SOURCE_DIR}/include")
+message(STATUS "\${CMAKE_SOURCE_DIR}/include = ${CMAKE_SOURCE_DIR}/include")
 
 add_subdirectory("netinet")
 add_subdirectory("sys")
+
 target_link_libraries(
         "${LIBRARY_NAME}"
         INTERFACE

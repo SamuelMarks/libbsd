@@ -30,11 +30,7 @@
 #include <ctype.h>
 #include <errno.h>
 #include <inttypes.h>
-#if defined(_MSC_VER) || defined(__MINGW32__) || defined(__MSYS__)
 #include <bsd/libutil.h>
-#else
-#include <libutil.h>
-#endif
 #include <stdint.h>
 
 /*
